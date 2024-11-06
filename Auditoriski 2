@@ -1,0 +1,10 @@
+Задача 1
+
+◼ Да се напише JavaScript функција која ќе провери дали даден
+податок е стринг или не
+◼ Пример:
+
+console.log(is_string('w3resource'));
+true
+console.log(is_string([1, 2, 4, 0]));
+false
