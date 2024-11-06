@@ -8,3 +8,40 @@ console.log(is_string('w3resource'));
 true
 console.log(is_string([1, 2, 4, 0]));
 false
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Type Checker</title>
+</head>
+<body>
+<script type="text/javascript">
+    // Prompt the user for input
+    var input = prompt("Vnesi string:");
+
+    // Function to check the type of the input
+    function checkType(input) {
+        // Check if input is null
+        if (input === null) {
+            alert("Input is null");
+        }
+        // Check if input is exactly "true" or "false", which we'll treat as a boolean
+        else if (input === "true" || input === "false") {
+            alert(input + " is a Boolean");
+        }
+        // Check if input is a numeric string
+        else if (!isNaN(input) && input.trim() !== "") {
+            alert(input + " is a Number");
+        }
+        // Otherwise, it is a string
+        else {
+            alert(input + " e String");
+        }
+    }
+
+    // Call the function with the user's input
+    checkType(input);
+</script>
+</body>
+</html>
