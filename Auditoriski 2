@@ -45,3 +45,183 @@ false
 </script>
 </body>
 </html>
+
+
+
+Задача 2
+◼ Да се напише JavaScript функција која ќе провери дали даден
+стринг е празен или не
+
+
+◼ Пример:
+console.log(is_Blank(''));
+console.log(is_Blank('abc’));
+true
+false
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Type Checker</title>
+</head>
+<body>
+<script type="text/javascript">
+
+    // Prompt the user for input
+    var input = prompt("Vnesi string:");
+
+    // Function to check if the input is blank
+    function is_Blank(input) {
+        // Check if input is null or has a length of 0
+        if (input === null || input.trim().length === 0) {
+            alert("It's blank");
+        } else {
+            alert("It's not blank");
+        }
+    }
+
+    // Call the function with the user's input
+    is_Blank(input);
+
+</script>
+</body>
+</html>
+
+
+Задача 3
+◼ Да се напише JavaScript функција која даден стринг ќе го
+„параметризира“
+
+
+◼ Пример:
+console.log(string_parameterize("Robin Singh from USA."));
+"robin-singh-from-usa"
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Type Checker</title>
+</head>
+<body>
+<script type="text/javascript">
+
+    var input = prompt("Input string:");
+
+    function string_parameterize(input) {
+        // Replace all spaces with dashes and return the new string
+        return input.replaceAll(" ", "-");
+    }
+
+    // Call the function and update the input with the modified string
+    input = string_parameterize(input);
+
+    alert(input);
+
+</script>
+</body>
+</html>
+
+
+--------------------------------------------------------------------------------------------------------------
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Type Checker</title>
+</head>
+<body>
+<script type="text/javascript">
+
+    var input = prompt("Input string:");
+
+    function string_parameterize(input) {
+        // Trim, convert to lowercase, remove special characters, and replace spaces with dashes
+        return input.trim().toLowerCase().replace(/[^a-z0-9 -]/g, "")  // Remove non-alphanumeric characters
+            .replace(/\s+/g, "-");        // Replace spaces with a single dash
+    }
+
+    // Call the function and update the input with the modified string
+    input = string_parameterize(input);
+
+    alert(input);
+
+</script>
+</body>
+</html>
+
+
+Задача 4
+◼ Да се напише JavaScript функција која на даден стринг првата
+буква ќе му ја направи голема
+
+
+◼ Пример:
+
+console.log(capitalize('js string exercises'));
+"Js string exercises"
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Type Checker</title>
+</head>
+<body>
+<script type="text/javascript">
+
+    var input = prompt("Input string:");
+    var n = 1; // Specify how many characters you want to make uppercase
+
+    // Function to capitalize the first n characters
+    function capitalize(input, n) {
+        // Check if n is greater than the length of the string
+        if (n > input.length) {
+            n = input.length;
+        }
+
+        // Capitalize the first n characters and concatenate with the rest
+        return input.slice(0, n).toUpperCase() + input.slice(n);
+    }
+
+    // Call the function and update the input with the modified string
+    input = capitalize(input, n);
+
+    alert(input);
+
+</script>
+</body>
+</html>
+
+
+Задача 5
+◼ Да се напише JavaScript функција која вметнува стринг во друг
+стринг на одредена позиција
+
+
+◼ Пример:
+
+console.log(insert('We are doing some exercises.'));
+console.log(insert('We are doing some
+exercises.','JavaScript '));
+console.log(insert('We are doing some
+exercises.','JavaScript ',18));
+"We are doing some exercises."
+"JavaScript We are doing some exercises."
+"We are doing some JavaScript exercises."
+
+
+
+
+
+
+
+
+
