@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SubString Example</title>
+</head>
+<body>
+<script type="text/javascript">
+
+    var x = prompt("Vnesi recenica:", x);  // Prompt user for input
+    var words = x.split(" ").map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase());  // Capitalize each word
+// Go deli stringot ako ima " " kaj prvata bukva se pravi golema, se spokuva so ostanatite i se proveruvaat ako se golema bukva ili mala
+
+    // Sort words by length, longest first
+    words.sort((a, b) => b.length - a.length);
+
+
+
+    // Function to check if a word is a palindrome
+    function isPalindrome(word) {
+        var cleanedWord = word.toLowerCase().replace(/[^a-z0-9]/g, '');  // Clean word (remove non-alphanumeric chars)
+    // gi zima site bukvi vo stringot i podreduva obratno i gi spojuva pak vo string so join "
+    // bidejki e split('') se proveruva sekoja bukva vo stringot
+        var reversedWord = cleanedWord.split('').reverse().join('');  // Reverse the word
+        return cleanedWord === reversedWord;  // Compare original word with reversed word
+    }
+
+    // Filter out palindromes
+    var palindromes = words.filter(word => isPalindrome(word));
+
+    // If palindromes are found, display them
+    if (palindromes.length > 0) {
+// so join se stava ", " posle sekoj palindrom zbor
+        document.write("Palindromes: " + palindromes.join(", "));
+    } else {
+        document.write("No palindromes found.");
+    }
+
+</script>
+</body>
+</html>
+
+
+------------------------------------------------------------------------------------------------------------------------------
+
+
+ZA NAJDOLG ZBOR VO SERIJA OD 3 STRINGOVI
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SubString Example</title>
+</head>
+<body>
+<script type="text/javascript">
+
+   var string1 = prompt("Vnesi prv string: ", string1);
+   var string2 = prompt("Vnesi vtor string: ", string2);
+   var string3 = prompt("Vnesi tret string: ", string3);
+
+   // Function to find the longest word in a string
+   function findLongestWord(str) {
+       var words = str.split(" "); // Split string into words
+       var longestWord = "";
+
+       // Loop through each word to find the longest one
+       for (var i = 0; i < words.length; i++) {
+           if (words[i].length > longestWord.length) { // Compare lengths of words
+               longestWord = words[i];  // Update longestWord if current word is longer
+           }
+       }
+
+       return longestWord;  // Return the longest word
+   }
+
+   // Get the longest word from each string
+   var longw1 = findLongestWord(string1);
+   var longw2 = findLongestWord(string2);
+   var longw3 = findLongestWord(string3);
+
+   // Compare the longest words and determine the longest one
+   var longest = longw1;
+
+   if (longw2.length > longest.length) {
+       longest = longw2;
+   }
+   if (longw3.length > longest.length) {
+       longest = longw3;
+   }
+
+   // Display the longest word
+   document.write("The longest word is: " + longest);
+
+</script>
+</body>
+</html>
+
+
+
+
+
+
