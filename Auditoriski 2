@@ -462,6 +462,43 @@ Exercises', 'E','b'));
 </html>
 
 
+--------------------------------------------------------------------------------------------------------------
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>String Inserter</title>
+</head>
+<body>
+<script type="text/javascript">
+
+    // Prompt user for input strings
+    let str = prompt("Enter the main string: ");
+    let char = prompt("Enter the character to search for: ");
+    let pos = prompt("Enter the position (a for before, b for after): "); // Prompt user for position ('a' or 'b')
+
+    // Function to get substring before or after a specific character
+    function subStrAfterChars(str, char, pos) {
+        if (pos === 'b') {
+            return str.substring(str.indexOf(char) + 1);  // Substring after the character
+        } else if (pos === 'a') {
+            return str.substring(0, str.indexOf(char));  // Substring before the character
+        } else {
+            return str;  // Return the original string if pos is not 'a' or 'b'
+        }
+    }
+
+    // Call the function with user inputs
+    let result = subStrAfterChars(str, char, pos);
+
+    // Output the result
+    alert("Modified string: " + result);
+    console.log("Modified string:", result);
+
+</script>
+</body>
+</html>
 
 
 
