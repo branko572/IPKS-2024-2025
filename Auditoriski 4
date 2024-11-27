@@ -1,0 +1,422 @@
+Задача 1
+ Напишете ја функцијата style() која ќе го смени фонтот,
+големината и бојата на текст на параграфот
+13
+<!DOCTYPE html>
+<html><head>
+<meta charset=utf-8 />
+<title>Title</title>
+</head>
+<body>
+<p id ='text'>Change my style</p>
+<div>
+<button id="jsstyle"
+onclick="style()">Style</button>
+</div>
+</body>
+</html>
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Title</title>
+</head>
+<body>
+<p id="text">Change my style</p>
+<div>
+    <button id="jsstyle" onclick="styleText()">Style</button>
+    <script type="text/javascript">
+        function styleText() {
+            // Retrieve the element by ID
+            let text = document.getElementById('text');
+
+            // Apply the styles
+            text.style.fontSize = "14pt";
+            text.style.fontFamily = "Comic Sans MS";
+            text.style.color = "green";
+        }
+    </script>
+</div>
+</body>
+</html>
+
+
+
+
+Задача 2
+
+ Напишете ја функцијата background() која ќе ја постави црвена
+позадина на параграфите
+15
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset=utf-8 />
+<title>Title</title>
+</head>
+<body>
+<input type="button" value="Click to set paragraph back
+ground color" onclick="background()">
+<p>Paragraph 1</p>
+<p>Paragraph 2</p>
+</body>
+</html>
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset=utf-8 />
+    <title>Title</title>
+</head>
+<body>
+<input type="button" value="Click to set paragraph back
+ground color" onclick="background()">
+<p>Paragraph 1</p>
+<p>Paragraph 2</p>
+
+
+<script type="text/javascript">
+    function background(){
+
+        let p=document.getElementsByTagName('p');
+
+        for(let i=0;i<p.length;i++){
+            p[i].style.backgroundColor="red";
+        }
+
+    }
+
+</script>
+</body>
+</html>
+
+-------------------------------------------------------------------------------
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset=utf-8 />
+    <title>Title</title>
+</head>
+<body>
+<input type="button" value="Click to set paragraph back
+ground color" onclick="set_background()">
+<p>Paragraph 1</p>
+<p>Paragraph 2</p>
+
+
+<script type="text/javascript">
+    function set_background() {
+        docBody = document.getElementsByTagName("body")[0];
+// земи ги сите параграфи во body тагот
+        myBodyElements = docBody.getElementsByTagName("p");
+// земи го првиот параграф
+        myp1 = myBodyElements[0];
+        myp1.style.background = "rgb(255,0,0)";
+// земи го вториот параграф
+        myp2 = myBodyElements[1];
+        myp2.style.background = "rgb(255,255,0)";
+    }
+
+
+</script>
+</body>
+</html>
+
+
+Задача 3
+
+ Напишете ја функцијата getAttributes () која во конзола ќе ги
+испечати href, hreflang, rel, target, и type атрибутите на линкот
+17
+<!DOCTYPE html>
+<html><head>
+<meta charset=utf-8 />
+</head>
+<body>
+<p><a id="finki" type="text/html" hreflang="enus" rel="nofollow" target="_self" href="http://www.w3
+resource.com/">finki</a></p>
+<button onclick="getAttributes()">Click here to get
+attributes value</button>
+</body>
+</html>
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Hello</title>
+    <meta charset=utf-8 />
+</head>
+<body>
+<p><a id="finki" type="text/html" hreflang="enus" rel="nofollow" target="_self" href="http://www.w3resource.com/">finki</a></p>
+
+<button onclick="getAttributes()">Click here to get attributes value</button>
+<script type="text/javascript">
+
+    function getAttributes(){
+
+      const href= document.getElementById("finki").href;
+      console.log("Href value: "+href);
+
+      const hreflang=document.getElementById("finki").hreflang;
+      console.log("Hreflang value: "+hreflang);
+
+      const target= document.getElementById("finki").target;
+      console.log("Target value: "+target);
+
+        const rel= document.getElementById("finki").rel;
+        console.log("Target value: "+rel);
+
+        const type= document.getElementById("finki").type;
+        console.log("Target value: "+type);
+
+
+
+
+    }
+
+</script>
+
+</body>
+</html>
+
+
+
+Задача 4
+ Напишете ја функцијата isPrime() која е ќе провери дали
+случајно генерираниот број n (од 1 до 100) е прост број.
+19
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset=utf-8 />
+<title>Check a number is prime or not</title>
+<script>
+// Math.random() – генерира случаен број од 0 до 1
+// Math.floor() – заокружува на најблискиот помал цел број
+var n = Math.floor((Math.random() * 100) + 1);
+console.log(n + ', '+ isPrime(n));
+</script>
+</head>
+<body>
+</body>
+</html>
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset=utf-8 />
+    <title>Check a number is prime or not</title>
+    <script>
+
+        function isPrime(){
+            if (n===1) {
+                return false;
+            }
+            else if(n === 2) {
+                return true;
+            }else {
+                for (var x = 2; x < n; x++)
+                {
+                    if(n % x === 0)
+                    {
+                        return false;
+                    }
+                }
+                return true;
+            }
+
+        }
+
+        // Math.random() – генерира случаен број од 0 до 1
+        // Math.floor() – заокружува на најблискиот помал цел број
+        var n = Math.floor((Math.random() * 100) + 1);
+        console.log(n + ', '+ isPrime(n));
+    </script>
+</head>
+<body>
+</body>
+</html>
+
+
+Задача 5
+ Напишете програма во JavaScript која ќе поставува зелена боја
+на болдираниот текст кога покажувачот е над линкот.
+
+[On mouse over here bold words of the following paragraph will be highlighted]
+We have just started this section for the users (beginner to intermediate) who want to work
+with various JavaScript problems and write scripts online to test their JavaScript skill.
+
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Get And Style All Tags</title>
+</head>
+<body>
+<p>[<a href="#" onMouseOver="highlight()" onMouseOut="returnToNormal()">On mouse over here bold words of the following paragraph will be highlighted</a>]</p>
+<p><strong>We</strong> have just started <strong>this</strong> section for the users (<strong>beginner</strong> to intermediate) who
+    <strong>want</strong> to work with <strong>various</strong> JavaScript <strong>problems</strong>
+    and write scripts online to <strong>test</strong> their JavaScript <strong>skill</strong>.</p>
+
+<script type="text/javascript">
+
+    function highlight() {
+        let boldElements = document.getElementsByTagName('strong'); // Get all <strong> elements
+        for (let i = 0; i < boldElements.length; i++) {
+            boldElements[i].style.color = "green"; // Change color to green
+        }
+    }
+
+    function returnToNormal() {
+        let boldElements = document.getElementsByTagName('strong'); // Get all <strong> elements
+        for (let i = 0; i < boldElements.length; i++) {
+            boldElements[i].style.color = ""; // Reset color
+        }
+    }
+
+</script>
+
+</body>
+</html>
+
+-------------------------------------------------------------------------------
+
+Задача 6
+ Напишете ја функцијата getOptions() која ќе ги изброи и
+испечати сите елементи од листата
+23
+
+<!DOCTYPE html>
+<html><head>
+<meta charset=utf-8 />
+<style type="text/css">
+body {margin: 30px;}
+</style>
+<title>Count and display items of a dropdown list</title>
+</head><body><form>
+Select your favorite Color :
+<select id="mySelect">
+<option>Red</option>
+<option>Green</option>
+<option>Blue</option>
+<option>White</option>
+</select>
+<input type="button" onclick="getOptions()" value="Count and Output all
+items">
+</form></body></html>
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset=UTF-8 />
+    <style type="text/css">
+        body {margin: 30px;}
+    </style>
+    <title>Count and display items of a dropdown list</title>
+</head><body>
+<form>
+    Select your favorite Color :
+    <select id="mySelect">
+        <option>Red</option>
+        <option>Green</option>
+        <option>Blue</option>
+        <option>White</option>
+    </select>
+    <input type="button" onclick="getOptions()" value="Count and Output allitems">
+</form>
+
+
+<script type="text/javascript">
+
+
+    function getOptions()
+    {
+        var x=document.getElementById("mySelect");
+        var txt1 = "No. of items : ";
+        var i;
+        l=document.getElementById("mySelect").length;
+        txt1 = txt1+l;
+        for (i=0;i<x.length;i++) {
+            txt1 = txt1 + "\n" + x.options[i].text;
+        }
+        alert(txt1);
+    }
+
+</script>
+</body>
+</html>
+
+Задача 7
+
+ Направете веб страница која ќе пресметува волумен на сфера
+за даден радиус.
+
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Volume of a Sphere</title>
+    <style>
+        body{padding-top:30px;}
+        label, input{display:block; margin-bottom: 10px;}
+    </style>
+</head>
+<body>
+<p>Input radius value and get the volume of a sphere.</p>
+<form id="MyForm">
+    <label for="radius">Radius</label>
+    <input type="number" name="radius" id="radius" required>
+
+    <label for="volume">Volume</label>
+    <input type="text" name="volume" id="volume" readonly>
+
+    <input type="submit" value="Calculate" id="submit">
+</form>
+
+<script type="text/javascript">
+    document.getElementById("MyForm").addEventListener("submit", function(event){
+        event.preventDefault(); // Prevent form from submitting to refresh the page
+
+        // Get the radius value from the input field
+        let radius = parseFloat(document.getElementById("radius").value);
+
+        // Check if the radius is valid
+        if (isNaN(radius) || radius <= 0) {
+            alert("Please enter a valid positive number for the radius.");
+            return;
+        }
+
+        // Calculate the volume of the sphere
+        let volume = (4 / 3) * Math.PI * Math.pow(radius, 3);
+
+        // Display the volume in the 'volume' input field
+        document.getElementById("volume").value = volume.toFixed(2); // rounding to two decimal places
+    });
+</script>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
