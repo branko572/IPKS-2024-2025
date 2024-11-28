@@ -6,4 +6,77 @@
 
 
 
+<!DOCTYPE HTML>
+<html lang="en, mk">
+<head>
+
+    <meta charset="UTF-8">
+    <title>Hello</title>
+    <STYLE>
+        label{
+            display: inline-block;
+            width: 100px;
+        }
+
+        input
+
+    </STYLE>
+
+</head>
+<body>
+<h1>Форма за контакт</h1>
+
+
+<div><label>Име</label><input id="name" type="text"></div>
+<div><label>Презиме</label><input id="surname" type="text"></div>
+<div><label>Емаил</label><input id="email" type="text"></div>
+<div><label>Возраст</label>
+    <select id="age">
+        <option value="19">19</option>
+        <option value="20">20</option>
+        <option value="21">21</option>
+        <option value="22">22</option>
+        <option value="23">23</option>
+    </select>
+</div>
+<div>
+    <input type="button" id="btn" onclick="send();" value="Прати">
+</div>
+<input type="text" disabled="disabled" id="message">
+
+
+
+<script type="text/javascript">
+
+    function send(){
+
+        let ime=document.getElementById("name").value;
+        let prezime=document.getElementById("surname").value;
+        let email=document.getElementById("email").value;
+        let age=document.getElementById("age").value;
+
+        if(ime=="" || prezime=="" || email=="" || age=="")
+        {
+            alert("Сите полиња мора да се пополнети");
+        }
+        else
+        {
+            let str="Господине "+ime+" "+prezime+" дали сте сигурни";
+            if(confirm(str))
+            {
+                document.getElementById("message").value="Podatocite se uspesno isprateni";
+            }
+            else
+                alert("Вашите податоци не се испратени");
+        }
+
+    }
+
+
+</script>
+
+</body>
+</html>
+
+
 
