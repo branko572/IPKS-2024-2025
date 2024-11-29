@@ -1,1 +1,405 @@
+1. 
+
+Да се направи веб-страница за огласување на предмети за продажба преку интернет. Во
+горниот дел од веб-страницата се внесуваат податоци за предметот и тоа име и презиме на
+огласувачот, име на предметот што се продава, код на предметот, опис на предметот, цена на
+чинење на произодот и од паѓачка листа се избира дали производот е употребуван или не
+(used, never-used). Под формата се наоѓаат две табели, една табела во која се додаваат
+огласите за користени предмети, а во другата табела се додаваат огласите за предмети кои
+не се користени. При кликнување на копчето Add, ако сите полиња се пополнети, се додава
+нов оглас во соодветната табела според тоа дали предметот е користен, а полињата не се
+ресетираат (15 поени). Ако не се внесени сите полиња се печати порака за грешка (5 поени).
+Пред да се додаде новиот оглас, потребно е да се провери дали веќе постои огласен предмет
+кој го има тој код. Доколку веќе има додадено предмет со тој код, потребно е да прикаже
+порака за грешка и предметот да не се додава (10 поени). Дополнително, треба да се провери
+дали податоците кои се внесени одговараат на потребните вредности, односно цената на
+производот треба да биде поголема од 0. При прикажување, цената на секој производ треба
+да се зголеми за 10% како вредност која останува за огласникот (5 поени). За секој оглас, се
+прикажува име и презиме на огласувачот, име на предметот, пресметана цена, кодот на
+предметот, каталошки број и копче Sold. Каталошки број на даден предмет се добива кога
+од кодот на бројот ќе се извадат сите броеви и знакот ! (15 поени). При клик на копчето Sold
+огласот се обојува во жолто и копчето се брише од редицата (10 поени). Во поле над табелите
+се наоѓа бројач кој прикажува број на активни огласи од двете табели (не продадени) (5
+поени). Во прилог е изгледот на страницата (15 поени).
+
+
+
+
+<!DOCTYPE HTML>
+<html lang="en, mk">
+<head>
+    <meta charset="UTF-8">
+    <title>Project Cost</title>
+    <style type="text/css">
+        label {
+            width: 100px;
+            display: inline-block;
+        }
+
+        div {
+            margin-bottom: 10px;
+        }
+
+        table, td, th {
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+
+        body {
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        #Table {
+            display: flex;
+            align-items: center;
+            flex-direction: row;
+            gap: 30px;
+        }
+
+        tr.sold {
+            background-color: yellow;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Online Shop</h1>
+<div><label>Name and Surname</label><input type="text" id="name"></div>
+<div><label>Item</label><input type="text" id="item"></div>
+<div><label>Item description</label><input type="text" id="itemdesc"></div>
+<div><label>Price</label><input type="text" id="price"></div>
+
+<div><label>Used</label>
+    <select id="type">
+        <option>used</option>
+        <option>unused</option>
+    </select>
+</div>
+
+<input type="button" id="btn" value="Add" onclick="addItem()">
+
+<div><label>Active items:</label><label id="active-count">0</label></div>
+
+<div id="Table">
+    <div>
+        <h1>Unused</h1>
+        <table id="Unused">
+            <thead>
+            <th>Name</th><th>Item</th><th>Price</th><th>Code</th><th>Catalog Number</th><th>Actions</th>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+
+    <div>
+        <h1>Used</h1>
+        <table id="Used">
+            <thead>
+            <th>Name</th><th>Item</th><th>Price</th><th>Code</th><th>Catalog Number</th><th>Actions</th>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script type="text/javascript">
+    function addItem() {
+        // Get the input values
+        let name = document.getElementById("name").value;
+        let item = document.getElementById("item").value;
+        let itemdesc = document.getElementById("itemdesc").value;
+        let price = parseFloat(document.getElementById("price").value);
+        let type = document.getElementById("type").value;
+
+        // Validation check: ensure no field is empty and price is positive
+        if (name === "" || item === "" || itemdesc === "" || isNaN(price) || price <= 0) {
+            alert("All fields must be filled and price must be greater than 0.");
+            return;
+        }
+
+        // Check for duplicate code (Item code)
+        let code = item + Date.now(); // Use item name + timestamp as unique code (for simplicity)
+        let catalogNumber = code.replace(/[^\d!]/g, ''); // Remove everything except digits and !
+
+        // Check if the item already exists (duplicate code) in either of the tables
+        if (isDuplicateItem(code)) {
+            alert("An item with this code already exists.");
+            return;
+        }
+
+        // Create a new row for the correct table (Used or Unused)
+        let tableRef;
+        if (type === "used") {
+            tableRef = document.getElementById("Used").getElementsByTagName('tbody')[0];
+        } else {
+            tableRef = document.getElementById("Unused").getElementsByTagName('tbody')[0];
+        }
+
+        let newRow = tableRef.insertRow(tableRef.rows.length);
+
+        // Insert cells into the row
+        newRow.insertCell(0).innerHTML = name;
+        newRow.insertCell(1).innerHTML = item;
+        newRow.insertCell(2).innerHTML = (price * 1.1).toFixed(2); // Add 10% to the price
+        newRow.insertCell(3).innerHTML = code;
+        newRow.insertCell(4).innerHTML = catalogNumber;
+
+        // Add "Sold" button
+        let actionsCell = newRow.insertCell(5);
+        let soldButton = document.createElement("button");
+        soldButton.innerHTML = "Sold";
+        soldButton.onclick = function() {
+            markAsSold(newRow, soldButton);
+        };
+        actionsCell.appendChild(soldButton);
+
+        // Update active items count
+        updateActiveItemsCount();
+    }
+
+    function isDuplicateItem(code) {
+        let tables = [document.getElementById("Used"), document.getElementById("Unused")];
+        for (let table of tables) {
+            let rows = table.getElementsByTagName("tbody")[0].rows;
+            for (let row of rows) {
+                if (row.cells[3].innerHTML === code) {
+                    return true; // Duplicate found
+                }
+            }
+        }
+        return false;
+    }
+
+    function markAsSold(row, button) {
+        row.classList.add("sold"); // Highlight row in yellow
+        button.remove(); // Remove the "Sold" button
+        updateActiveItemsCount();
+    }
+
+    function updateActiveItemsCount() {
+        let activeCount = 0;
+        let tables = [document.getElementById("Used"), document.getElementById("Unused")];
+        for (let table of tables) {
+            let rows = table.getElementsByTagName("tbody")[0].rows;
+            for (let row of rows) {
+                if (!row.classList.contains("sold")) {
+                    activeCount++;
+                }
+            }
+        }
+        document.getElementById("active-count").innerText = activeCount;
+    }
+</script>
+
+</body>
+</html>
+
+
+
+2.
+
+Да се направи веб-страница за регистрирање на корисници во систем за online часови. Во
+горниот дел од веб-страницата се внесуваат податоци за корисникот и тоа име и презиме,
+емаил адреса, години на старост, корисничко име, лозинка и од паѓачка листа се избира дали
+корисникот е наставник или ученик (teacher, student). Под формата се наоѓа табела во која се
+сместуваат корисниците. При кликнување на копчето Add, ако сите полиња се пополнети, се
+додава нов корисник во табелата, а полињата не се ресетираат (15 поени). Ако не се внесени
+сите полиња се печати порака за грешка (5 поени). Пред да се додаде нов корисник во
+табелата, треба да се провери дали корисничкото име е веќе искористено. Доколку некој
+корисник го искористил тоа корисничко име, не треба да се додаде новиот корисник и треба
+да се прикаже порака за грешка (10 поени). Исто така, треба да се направи проверка на
+лозинката на корисникот да биде долга барем 10 знаци, да содржи барем една голема буква и
+една бројка (15 поени). Дополнително, корисник помлад од 18 години не може да биде
+наставник на платформата, па не треба да се овозможи вакво додавање (5 поени). При
+прикажувањето на секој корисник, се прикажува името и презимето на корисникот, неговото
+корисничко име, емаил адреса, години на старост и улога. Сите студенти се обоени со сина
+боја, а наставниците со зелена (5 поени). За секој наставник, дополнително во секоја редица
+се наоѓа и копче Hire. При клик на копчето Hire, копчето се брише од редицата, а редицата се
+обојува во сиво (5 поени). Над табелата, стои поле во кое е прикажан бројот на слободни
+наставници кои може да се ангажираат за часови (5 поени). Во прилог е изгледот на
+страницата (15 поени).
+
+
+
+<!DOCTYPE HTML>
+<html lang="en, mk">
+<head>
+    <meta charset="UTF-8">
+    <title>Online Classes</title>
+    <style type="text/css">
+
+        div {
+            margin-bottom: 10px;
+        }
+
+        table, td, th {
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+        .teacher {
+            background-color: green;
+        }
+        .student {
+            background-color: blue;
+        }
+        .hired {
+            background-color: gray;
+        }
+        /* Ensure the Action column remains white */
+        td.action {
+            background-color: white;
+        }
+        #h11{
+            display: flex;
+            align-content: center;
+            justify-content: center;
+        }
+
+    </style>
+</head>
+<body>
+<div id="h11">
+    <h1>Online Classes</h1>
+</div>
+
+
+<div>Name and Surname: <input type="text" id="name"></div>
+<div>Email: <input type="email" id="email"></div>
+<div>Age: <input type="text" id="age"></div>
+<div>Username: <input type="text" id="username"></div>
+<div>Password: <input type="password" id="password"></div>
+
+<div>
+    Role: <select id="type">
+    <option>Teacher</option>
+    <option>Student</option>
+</select>
+</div>
+
+<input type="button" id="btn" value="Add" onclick="addUser()">
+<div><label>Available teachers: </label><label id="teacher-count">0</label></div>
+
+<h1>Users</h1>
+
+<div id="Table">
+    <table>
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Age</th>
+            <th>Role</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- Rows will go here -->
+        </tbody>
+    </table>
+</div>
+
+<script type="text/javascript">
+    function addUser() {
+        let name = document.getElementById("name").value.trim();
+        let email = document.getElementById("email").value.trim();
+        let age = parseInt(document.getElementById("age").value.trim());
+        let username = document.getElementById("username").value.trim();
+        let password = document.getElementById("password").value.trim();
+        let role = document.getElementById("type").value;
+
+        // Validation
+        if (!name || !email || isNaN(age) || !username || !password) {
+            alert("All fields must be filled out correctly.");
+            return;
+        }
+
+        if (!isPasswordValid(password)) {
+            alert("Password must be at least 10 characters long, contain at least one uppercase letter, and one number.");
+            return;
+        }
+
+        if (role === "Teacher" && age < 18) {
+            alert("Teachers must be at least 18 years old.");
+            return;
+        }
+
+        if (isDuplicateUser(username)) {
+            alert("Username already exists.");
+            return;
+        }
+
+        // Add user to table
+        let tableRef = document.getElementById("Table").getElementsByTagName("tbody")[0];
+        let newRow = tableRef.insertRow(tableRef.rows.length);
+
+        // Add cells to the new row
+        newRow.insertCell(0).innerHTML = name;          // Name column
+        newRow.insertCell(1).innerHTML = username;      // Username column
+        newRow.insertCell(2).innerHTML = email;         // Email column
+        newRow.insertCell(3).innerHTML = age;           // Age column
+        newRow.insertCell(4).innerHTML = role;          // Role column
+
+        // Assign color based on role (Only for the role column)
+        if (role === "Teacher") {
+            newRow.classList.add("teacher");
+        } else {
+            newRow.classList.add("student");
+        }
+
+        // Actions column (will remain white)
+        let actionsCell = newRow.insertCell(5);
+        actionsCell.classList.add('action'); // Assign class to Action column
+        if (role === "Teacher") {
+            let hireButton = document.createElement("button");
+            hireButton.innerHTML = "Hire";
+            hireButton.onclick = function () {
+                newRow.classList.add("hired");
+                hireButton.remove();
+                updateTeacherCount();
+            };
+            actionsCell.appendChild(hireButton);
+        }
+
+        // Update available teacher count
+        updateTeacherCount();
+    }
+
+    function isDuplicateUser(username) {
+        let rows = document.getElementById("Table").getElementsByTagName("tbody")[0].rows;
+        for (let row of rows) {
+            if (row.cells[1].innerHTML === username) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    function isPasswordValid(password) {
+        let hasUpperCase = /[A-Z]/.test(password);
+        let hasNumber = /\d/.test(password);
+        return password.length >= 10 && hasUpperCase && hasNumber;
+    }
+
+    function updateTeacherCount() {
+        let rows = document.getElementById("Table").getElementsByTagName("tbody")[0].rows;
+        let availableTeachers = 0;
+        for (let row of rows) {
+            if (row.classList.contains("teacher") && !row.classList.contains("hired")) {
+                availableTeachers++;
+            }
+        }
+        document.getElementById("teacher-count").innerText = availableTeachers;
+    }
+</script>
+</body>
+</html>
+
+
+
+
 
