@@ -44,6 +44,24 @@ document.write("Ne ste vnesile cel broj!")
 
 ------------------------------------------------------------
 
+ <script type="text/javascript">
+        var a = Number(prompt("vnesi vrednost za a"));
+        var b = Number(prompt("vnesi vrednost za b"));
+     if(a>b){
+         alert("maksimumot e a "+ a);
+
+     }
+      if(a<b){
+         alert("maksimumot e b "+ b);
+
+     } if (a === b) {
+            alert("a i b se ednakvi");
+        }
+
+</script>
+
+------------------------------------------------------------
+
 Задача 2
 Да се напише програма која проверува дали
 дадена година која се вчитува од тастатура е
