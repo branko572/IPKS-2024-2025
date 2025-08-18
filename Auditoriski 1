@@ -88,6 +88,17 @@ document.write("Ne ste vnesile cel broj!")
 
 ------------------------------------------------------------
 
+  <script type="text/javascript">
+        var a = Number(prompt("vnesi prestapna godina"));
+        if ((a % 400 === 0) || (a % 4 === 0 && a % 100 !== 0)){
+        alert("Godinata: "+ a +" e prestapna");
+    }    else {
+        alert("Godinata: "+ a +" ne e prestapna");
+    }
+</script>
+
+------------------------------------------------------------
+
 <script type="text/javascript">
 var godina = prompt("Vnesete ja godinata");
 godina = parseInt(godina);
