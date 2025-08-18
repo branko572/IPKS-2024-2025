@@ -404,7 +404,29 @@ document.write("Najgolemiot broj sto go vnesovte e " + max);
 </body>
 </html>
 
+------------------------------------------------------------
 
+<script type="text/javascript">
+      var x=0;
+      var max=-999;
+      while (true) {
+          x = prompt("Vnesi broj (ili tekst za kraj):");
+
+          // if input is not a number or user presses cancel → stop loop
+          if (x === null || x === "" || isNaN(x)) {
+              break;
+          }
+
+          // convert to number
+          x = Number(x);
+
+          if (x > max) {
+              max = x;
+          }
+      }
+
+      document.write(max);
+    </script>
 
 
 
