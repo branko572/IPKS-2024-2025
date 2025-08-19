@@ -407,6 +407,28 @@ exercises.',15,'!!’))
 </body>
 </html>
 
+--------------------------------------------------------------------------------------------------------------
+ <script>
+        function text_truncate(str, length, ending = "...") {
+            // Ако не е зададена должина → врати го целиот стринг
+            if (!length) {
+                return str;
+            }
+
+            // Ако е пократок или еднаков на лимитот → врати го стрингот
+            if (str.length <= length) {
+                return str;
+            }
+
+            // Ако е подолг → скрати и додади завршеток
+            return str.slice(0, length - ending.length) + ending;
+        }
+
+        console.log(text_truncate('We are doing JS string exercises.'));
+        console.log(text_truncate('We are doing JS string exercises.', 19));
+        console.log(text_truncate('We are doing JS string exercises.', 15, '!!'));
+    </script>
+--------------------------------------------------------------------------------------------------------------
 
 Задача 7
 ◼ Да се напише JavaScript функција која ќе го избрише првото
