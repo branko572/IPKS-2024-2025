@@ -326,9 +326,36 @@ exercises.','JavaScript ',18));
 </body>
 </html>
 
+--------------------------------------------------------------------------------------------------------------
 
 
+   <script>
+        function insert(str, toInsert = "", position = 0) {
+            // Ако не е дадено ништо за вметнување → врати го оригиналот
+            if (!toInsert) {
+                return str;
+            }
+            // Ако нема позиција, вметнувај на почеток
+            if (position === 0) {
+                return toInsert + str;
+            }
+            // Инаку вметни на таа позиција
+            return str.slice(0, position) + toInsert + str.slice(position);
+        }
 
+        // Примери
+        console.log(insert("We are doing some exercises."));
+        // -> "We are doing some exercises."
+
+        console.log(insert("We are doing some exercises.", "JavaScript "));
+        // -> "JavaScript We are doing some exercises."
+
+        console.log(insert("We are doing some exercises.", "JavaScript ", 18));
+        // -> "We are doing some JavaScript exercises."
+    </script>
+
+
+--------------------------------------------------------------------------------------------------------------
 
 Задача 6
 ◼ Да се напише JavaScript функција која крати стринг ако има
