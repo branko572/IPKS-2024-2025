@@ -187,7 +187,26 @@ attributes value</button>
 </body>
 </html>
 
+-------------------------------------------------------------------------------
 
+ <script>
+
+      function insertDash(num){
+          let s=num.toString();
+          let result=[s[0]];
+
+          for (let i=1;i<s.length;i++){
+              if(s[i-1]%2==0 && s[i]%2==0){
+                  result.push("-");
+              }
+              result.push(s[i]);
+          }
+          return result.join("");
+      }
+      console.log(insertDash(25468));
+    </script>
+
+-------------------------------------------------------------------------------
 
 Задача 4
  Напишете ја функцијата isPrime() која е ќе провери дали
