@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=x">
+    <title>Document</title>
+</head>
+<style>
+    .inputs {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        gap: 1px;
+    }
+
+    .card {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        border: 1px solid black;
+        padding: 8px;
+        width: 100px;
+        border-radius: 25px;
+    }
+
+    .cardE {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        border: 1px solid black;
+        padding: 8px;
+        width: 100px;
+        background-color: red;
+        border-radius: 25px;
+        animation: anim1 0.5s ease-in-out;
+    }
+
+    #alive,
+    #eliminated {
+        width: 80%;
+        margin: auto;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+    }
+
+    @keyframes anim {
+        0%{
+            scale: 1;
+        }
+        100%{
+            scale: 0;
+        }
+    }
+    @keyframes anim1 {
+        0%{scale:0;}
+        100%{scale: 1;}
+    }
+</style>
+
+<body>
+<h1 style="text-align: center;">Lucky Game</h1>
+<div class="inputs">
+    <button id="start">Start Game</button>
+    <p id="roundStart"></p>
+    <p id="winner"></p>
+</div>
+<h1 style="text-align: center;">Alive players:</h1>
+<div id="alive"></div>
+<br><br>
+<h1 style="text-align: center;">Eliminated players:</h1>
+<div id="eliminated"></div>
+<script>
+    let alive = document.getElementById("alive");
+    let eliminated = document.getElementById("eliminated");
+    let players = [
+        { name: "Ubuntu", age: 23, id: 1 },
+        { name: "Mint", age: 21, id: 2 },
+        { name: "Kali", age: 21, id: 3 },
+        { name: "Backtrack", age: 26, id: 4 },
+        { name: "Fedora", age: 19, id: 5 },
+        { name: "HyperX", age: 23, id: 6 },
+        { name: "Debian", age: 28, id: 7 }
+    ]
+    let allowed = [];
+    players.forEach(p => {
+        allowed.push(p.id);
+    })
+    document.getElementById("start").addEventListener("click", function () {
+        let secconds = 5;
+        let alives =document.getElementById("alive").querySelectorAll("div");
+        if (alives.length == 1) {
+            document.getElementById("roundStart").innerText = `Game Finished!`;
+        }
+        else {
+            let interval = setInterval(() => {
+                document.getElementById("roundStart").innerText = `The round starts in ${secconds}`;
+                secconds--;
+                if (secconds < 1) {
+                    clearInterval(interval);
+                    document.getElementById("roundStart").innerText = "Round started!";
+                    let randIndex = Math.floor(Math.random() * allowed.length);
+                    let rand = allowed[randIndex];
+                    alives = document.getElementById("alive").querySelectorAll("div");
+                    let pos = players.findIndex(c => c.id == rand);
+                    let pos2 = allowed.findIndex(c => c == rand);
+                    if (alives.length == 1) {
+
+                    }
+                    else {
+                        document.getElementById("winner").innerText = `Player ${players[pos].name} is eliminated`;
+                        allowed.splice(pos2, 1);
+                        document.getElementById(players[pos].id).style.animation="anim 0.5s ease-in-out";
+                        setTimeout(() => {
+                            document.getElementById(`${players[pos].id}`).remove();
+                        }, 500);
+
+                    }
+                    function checkWinner() {
+                        let alives = document.getElementById("alive").querySelectorAll("div");
+                        if (alives.length == 1) {
+                            let randIndex = Math.floor(Math.random() * allowed.length);
+                            let rand = allowed[randIndex];
+                            let alives = document.getElementById("alive").querySelectorAll("div");
+                            let posz = players.findIndex(c => c.id == rand);
+                            document.getElementById("winner").innerText = `Player ${players[posz].name} is the winner`;
+                        }
+                        setTimeout(()=>{
+                            document.getElementById("eliminated").innerHTML += `<div class="cardE" id="${players[pos].id}"><p>${players[pos].name}</p><p>${players[pos].age}</p><p>${players[pos].id}</div>`;
+                        },500);
+                    }
+                    if (alives.length != 1) {
+                        checkWinner();
+                    }
+                }
+            }, 100);
+        }
+    })
+    players.forEach(p => {
+        alive.innerHTML += `<div class="card" id="${p.id}"><p>${p.name}</p><p>${p.age}</p><p>${p.id}</div>`
+    })
+</script>
+</body>
+
+</html>
