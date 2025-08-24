@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Rectangle Game</title>
+    <style>
+        #container {
+            position: relative;
+            width: 800px;
+            height: 600px;
+            border: 2px solid black;
+            overflow: hidden;
+        }
+        .rect {
+            position: absolute;
+        }
+        #score {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+        .line {
+            position: absolute;
+            top: 0;
+            width: 3px;
+            height: 100%;
+            background: black;
+        }
+    </style>
+</head>
+<body>
+<div id="container">
+    <div id="score">Score: 0</div>
+</div>
+
+<script>
+    const jsonStr = '[{"id":"1", "dir": "vertical", "width": "87px", "height":"43px", "score": 52, "left":50, "top":180},{"id":"2", "dir": "horizontal", "width": "112px", "height":"48px", "score": 2, "left":140, "top":250},{"id":"3", "dir": "vertical", "width": "47px", "height":"97px", "score": 37, "left":560, "top":380},{"id":"4", "dir": "vertical", "width": "71px", "height":"71px", "score": 150, "left":450, "top":350},{"id":"5", "dir": "horizontal", "width": "76px", "height":"95px", "score": 24, "left":650, "top":15},{"id":"6", "dir": "vertical", "width": "100px", "height":"132px", "score": 73, "left":200, "top":70}]';
+
+    const data = JSON.parse(jsonStr);
+    const container = document.getElementById("container");
+    let rectangles = [];
+    let score = 0;
+    let lineCount = 0;
+
+    // Креирај правоаголници
+    data.forEach(obj => {
+        const div = document.createElement("div");
+        div.className = "rect";
+        div.style.width = obj.width;
+        div.style.height = obj.height;
+        div.style.background = `hsl(${Math.random()*360},70%,60%)`;
+        div.style.left = obj.left + "px";
+        div.style.top = obj.top + "px";
+
+        container.appendChild(div);
+
+        rectangles.push({
+            el: div,
+            dir: obj.dir,
+            w: parseInt(obj.width),
+            h: parseInt(obj.height),
+            x: obj.left,
+            y: obj.top,
+            dx: obj.dir === "horizontal" ? 2 : 0,
+            dy: obj.dir === "vertical" ? 2 : 0,
+            score: obj.score
+        });
+    });
+
+    // Движење на правоаголниците
+    function moveRectangles() {
+        rectangles.forEach(r => {
+            r.x += r.dx;
+            r.y += r.dy;
+
+            // одбивање од ѕид
+            if (r.x <= 0 || r.x + r.w >= 800) r.dx *= -1;
+            if (r.y <= 0 || r.y + r.h >= 600) r.dy *= -1;
+
+            r.el.style.left = r.x + "px";
+            r.el.style.top = r.y + "px";
+        });
+    }
+
+    // Појавување на линија
+    function showLine() {
+        if (lineCount >= 3) return; // игра завршена
+        lineCount++;
+
+        const lineX = Math.floor(Math.random() * 800);
+        const line = document.createElement("div");
+        line.className = "line";
+        line.style.left = lineX + "px";
+        container.appendChild(line);
+
+        // Провери судир со правоаголници
+        let survivors = [];
+        rectangles.forEach(r => {
+            if (lineX >= r.x && lineX <= r.x + r.w) {
+                score += r.score;
+                r.el.remove(); // уништи
+            } else {
+                survivors.push(r);
+            }
+        });
+        rectangles = survivors;
+        document.getElementById("score").textContent = "Score: " + score;
+
+        // Избриши линија после 1 секунда
+        setTimeout(() => line.remove(), 1000);
+
+        // Ако не сме стигнале 3 линии → нова линија после 3 сек
+        if (lineCount < 3) {
+            setTimeout(showLine, 3000);
+        } else {
+            alert("Game Over! Final Score: " + score);
+        }
+    }
+
+    // старт
+    setInterval(moveRectangles, 20);
+    setTimeout(showLine, 3000);
+</script>
+</body>
+</html>
